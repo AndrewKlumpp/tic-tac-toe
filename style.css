@@ -47,6 +47,31 @@ h2:hover {
     cursor: default;
 }
 
+/* INFO */
+
+#info {
+    text-align: center;
+    width: 15rem;
+    color: var(--text-gold);
+}
+
+#info__title {
+    font-size: 2rem;
+}
+
+.info__player {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0.5rem;
+    border-radius: 0.3rem;
+    border: var(--border);
+    color: var(--dark);
+    background: var(--bg-white);
+}
+
+/* GRID */
+
 #grid {
     background: var(--bg-brown);
     display: grid;

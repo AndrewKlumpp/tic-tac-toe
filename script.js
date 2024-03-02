@@ -23,7 +23,7 @@ const modal = document.getElementById("modal");
 
 const players = {
     playerOne: { name: "Jack", wins: 0 },
-    playerTwo: { name: "Jill", wins: 0 },
+    playerTwo: { name: "Jill", wins: 0 }
 };
 
 let move = 1;
@@ -38,20 +38,20 @@ function addSquareClick () {
     allSquares.forEach((square) => {
         square.addEventListener("click", squareClick);
     });
-}
+};
 
 function removeSquareClick () {
     allSquares.forEach((square) => {
         square.removeEventListener("click", squareClick);
     });
-}
+};
 
 function squareClick() {
     if (!this.classList.contains("cross") && !this.classList.contains("circle")) {
     this.classList.add(`${currentImage}`);
     incrementMove();
     };
-}
+};
 
 addSquareClick();
 
@@ -70,4 +70,145 @@ function incrementMove() {
         currentImage = "circle";
         infoText.innerHTML = `${players.playerTwo.name}'s turn`;
     };
-}
+    checkForWin();
+    checkForTie();
+};
+
+// CHECK FOR WIN
+
+function checkForWin() {
+    const lines = [
+        [squareOne, squareTwo, squareThree],
+        [squareFour, squareFive, squareSix],
+        [squareSeven, squareEight, squareNine],
+        [squareOne, squareFour, squareSeven],
+        [squareTwo, squareFive, squareEight],
+        [squareThree, squareSix, squareNine],
+        [squareOne, squareFive, squareNine],
+        [squareThree, squareFive, squareSeven]
+    ];
+
+    for (const line of lines) {
+        const hasCross = line.every((square) => square.classList.contains("cross"));
+        const hasCircle = line.every((square) => square.classList.contains("circle"));
+
+        if (hasCross || hasCircle) {
+            const winner = hasCross ? players.playerOne : players.playerTwo;
+            winner.wins += 1;
+            updateScores();
+            playerWon();
+            return;
+        };
+    };
+};
+
+function updateScores() {
+    playerOneScore.innerHTML = players.playerOne.wins;
+    playerTwoScore.innerHTML = players.playerTwo.wins;
+};
+
+function playerWon() {
+    infoText.innerHTML = `${pastPlayer} won!`;
+    playerHasWon = true;
+    continueGame();
+};
+
+// CHECK FOR TIE
+
+function checkForTie() {
+    const squares = [
+        squareOne,
+        squareTwo,
+        squareThree,
+        squareFour,
+        squareFive,
+        squareSix,
+        squareSeven,
+        squareEight,
+        squareNine
+    ];
+
+    const allSquaresFilled = squares.every((square) => {
+        return (
+            square.classList.contains("cross") || square.classList.contains("circle")
+        );
+    });
+
+    if (allSquaresFilled && !playerHasWon) {
+        infoText.innerHTML = "It's a tie!";
+        continueGame();
+    };
+
+};
+
+// CONTINUE / RESTART / RESET
+
+function continueGame() {
+    removeSquareClick();
+    setTimeout(() => {
+        reset();
+    }, 2000);
+};
+
+function restartGame() {
+    removeSquareClick();
+    reset();
+};
+
+function reset () {
+    allSquares.forEach((square) => {
+        square.classList = "grid__square";
+    });
+    addSquareClick();
+    playerHasWon = false;
+    infoText.innerHTML = `${nextPlayer}'s turn to start`;
+};
+
+// START GAME
+
+function startGame() {
+    startGameBtn.addEventListener("click", () => {
+        modal.style.display = "flex";
+    });
+
+    const form = document.querySelector("form");
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const player1Input = document
+        .getElementById("player1")
+        .value.trim()
+        .toLowerCase();
+        const player2Input = document
+        .getElementById("player2")
+        .value.trim()
+        .toLowerCase();
+
+        const player1InputCap = // Capitalizes input name
+            player1Input.charAt(0).toUpperCase() + player1Input.slice(1);
+        const player2InputCap = // Capitalizes input name
+            player2Input.charAt(0).toUpperCase() + player2Input.slice(1);
+
+        players.playerOne.name = player1InputCap;
+        players.playerTwo.name = player2InputCap;
+        nextPlayer = player1InputCap;
+
+        document.getElementById("info__player__name1").innerHTML =
+            players.playerOne.name;
+        document.getElementById("info__player__name2").innerHTML =
+            players.playerTwo.name;
+
+        players.playerOne.wins = 0;
+        players.playerTwo.wins = 0;
+        updateScores();
+
+        infoText.innerHTML = `${players.playerOne.name}'s turn to start`;
+        modal.style.display = "none";
+
+        startGameBtn.innerHTML = "Restart Game";
+        addSquareClick();
+        restartGame();
+    });
+};
+
+startGame();

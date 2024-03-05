@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
-    --bg-green: linear-gradient(
+    --bg-purple: linear-gradient(
         90deg,
-        rgba(4, 57, 46, 1) 0%,
-        rgba(0, 153, 102, 1) 100%
+        rgb(23, 4, 148) 0%,
+        rgb(89, 76, 145) 100%
     );
-    --bg-red: linear-gradient(
+    --bg-orange: linear-gradient(
         90deg,
-        rgb(39, 0, 0) 0%,
-        rgb(149, 0, 0) 100%
+        rgb(225, 93, 10) 0%,
+        rgb(223, 91, 34) 100%
     );
     --bg-brown: linear-gradient(
         90deg,
@@ -26,6 +26,7 @@
     --border: 0.1rem solid rgb(224, 224, 224);
 }
 
+
 body {
     height: 100vh;
     margin: 0;
@@ -34,7 +35,7 @@ body {
     align-items: center;
     justify-content: space-evenly;
     font-family: "Poppins", sans-serif;
-    background: var(--bg-green);
+    background: var(--bg-purple);
 }
 
 h1 {
@@ -162,7 +163,7 @@ h2:hover {
     width: 40%;
     border-radius: 5rem;
     color: var(--text-white);
-    background: var(--bg-red);
+    background: var(--bg-orange);
     border: var(--dark) solid 0.1rem;
 }
 
@@ -215,3 +216,26 @@ input[type="submit"]:active {
         width: 10rem;
     }
 }
+
+/* RUNAWAY BUTTON */
+
+/* .runaway {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 4rem;
+    width: 10rem;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 1px 1px 5px black;
+    background-color: white;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    user-select: none;
+} */
